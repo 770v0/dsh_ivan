@@ -1,0 +1,1018 @@
+/* ==========================================================================
+   ORBIT STAGE — a fan-made Alien Stage / Ivan skin for the DSH web GUI.
+   Only presentation lives here: no layout, routing, or data is touched.
+   ========================================================================== */
+
+#orbit-stage-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: transparent url("__BG_LIGHT__") center / cover no-repeat;
+  opacity: 0.62;
+  filter: saturate(0.86) contrast(0.98);
+}
+
+body[data-ds-dark-theme] #orbit-stage-bg {
+  background-image: url("__BG_DARK__");
+  opacity: 1;
+  filter: none;
+}
+
+/* Keep the app above the atmosphere layer. */
+#root {
+  position: relative;
+  z-index: 1;
+  background: transparent !important;
+}
+
+/* --------------------------------------------------------------------------
+   Shell
+   -------------------------------------------------------------------------- */
+
+[class*="mP3x-q_frame"],
+[class*="mP3x-q_centerCol"],
+[class*="mP3x-q_bottomRow"] {
+  background: transparent !important;
+}
+
+[class*="mP3x-q_sidebarCol"] {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(11, 14, 22, 0.92) 0%, rgba(7, 9, 15, 0.96) 58%, rgba(9, 11, 18, 0.95) 100%) !important;
+  border-right: 1px solid rgba(201, 34, 56, 0.12) !important;
+  box-shadow: inset -34px 0 80px rgba(0, 0, 0, 0.18);
+}
+
+[class*="mP3x-q_sidebarCol"]::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 164px;
+  background:
+    radial-gradient(circle at 18% -6%, rgba(255, 84, 118, 0.30), transparent 42%),
+    radial-gradient(circle at 76% 2%, rgba(84, 123, 255, 0.18), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 72%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+[class*="mP3x-q_sidebarCol"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 82% 16%, rgba(255, 255, 255, 0.06) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.05) 0 1px, transparent 1.5px),
+    linear-gradient(180deg, rgba(201, 34, 56, 0.10), transparent 28%);
+  opacity: 0.9;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Faint Ivan wallpaper layered behind the sidebar content. */
+.orbit-stage-sidebar-art,
+.orbit-stage-sidebar-art-img,
+.orbit-stage-sidebar-art-scrim {
+  position: absolute;
+  pointer-events: none;
+}
+
+.orbit-stage-sidebar-art {
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.orbit-stage-sidebar-art-img {
+  inset: 0;
+  background: url("__SIDEBAR_ART__") center 38% / cover no-repeat;
+  opacity: 0.14;
+}
+
+.orbit-stage-sidebar-art-scrim {
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(10, 13, 20, 0.82) 0%, rgba(10, 13, 20, 0.34) 34%, rgba(10, 13, 20, 0) 58%),
+    linear-gradient(0deg, rgba(10, 13, 20, 0.28) 0%, rgba(10, 13, 20, 0) 34%);
+}
+
+body:not([data-ds-dark-theme]) .orbit-stage-sidebar-art-img {
+  opacity: 0.2;
+}
+
+body:not([data-ds-dark-theme]) .orbit-stage-sidebar-art-scrim {
+  background:
+    linear-gradient(180deg, rgba(244, 240, 232, 0.86) 0%, rgba(244, 240, 232, 0.32) 34%, rgba(244, 240, 232, 0) 58%),
+    linear-gradient(0deg, rgba(244, 240, 232, 0.3) 0%, rgba(244, 240, 232, 0) 34%);
+}
+
+/* Lift the real sidebar UI above the wallpaper/glow/star layers.
+   Those layers are positioned z-index:0, which paints over static
+   content; the content root must establish a z-index:1 context. */
+[class*="mP3x-q_sidebarCol"] [class*="wtg9ga_root"] {
+  position: relative;
+  z-index: 1;
+}
+
+[class*="wtg9ga_root"] {
+  background: transparent !important;
+}
+
+[class*="mP3x-q_rightbarCol"] {
+  background: linear-gradient(180deg, rgba(10, 13, 20, 0.93) 0%, rgba(7, 9, 15, 0.96) 100%) !important;
+  border-left: 1px solid rgba(232, 236, 242, 0.06);
+}
+
+body:not([data-ds-dark-theme]) [class*="mP3x-q_rightbarCol"] {
+  background: linear-gradient(180deg, rgba(237, 231, 221, 0.95) 0%, rgba(244, 240, 232, 0.97) 100%) !important;
+  border-left-color: rgba(26, 27, 33, 0.06);
+}
+
+body:not([data-ds-dark-theme]) [class*="mP3x-q_sidebarCol"] {
+  background: linear-gradient(180deg, rgba(237, 231, 221, 0.94) 0%, rgba(244, 240, 232, 0.97) 100%) !important;
+  border-right-color: rgba(196, 30, 53, 0.14) !important;
+}
+
+body:not([data-ds-dark-theme]) [class*="mP3x-q_sidebarCol"]::before {
+  background:
+    radial-gradient(circle at 18% -6%, rgba(196, 30, 53, 0.16), transparent 42%),
+    radial-gradient(circle at 76% 2%, rgba(84, 123, 255, 0.12), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.34), transparent 72%);
+}
+
+body:not([data-ds-dark-theme]) [class*="mP3x-q_sidebarCol"]::after {
+  background:
+    radial-gradient(circle at 82% 16%, rgba(26, 27, 33, 0.08) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 18% 22%, rgba(26, 27, 33, 0.07) 0 1px, transparent 1.5px),
+    linear-gradient(180deg, rgba(196, 30, 53, 0.07), transparent 28%);
+}
+
+/* `~=` (not `*=`) is deliberate: the button's child spans are also named
+   newSession* (LabelMask/Content/Label/Shortcut). A substring match painted
+   the gradient and border onto every one of them, which showed up as nested
+   rectangular frames inside the button. */
+[class~="wtg9ga_newSession"] {
+  background: linear-gradient(135deg, rgba(201, 34, 56, 0.10), rgba(111, 91, 240, 0.07)) !important;
+  border: 1px solid rgba(201, 34, 56, 0.22) !important;
+  color: #f4f6fa !important;
+  box-shadow: 0 0 22px rgba(201, 34, 56, 0.07);
+}
+
+[class~="wtg9ga_newSession"]:hover {
+  background: linear-gradient(135deg, rgba(201, 34, 56, 0.17), rgba(111, 91, 240, 0.11)) !important;
+  border-color: rgba(201, 34, 56, 0.38) !important;
+}
+
+body:not([data-ds-dark-theme]) [class~="wtg9ga_newSession"] {
+  background: linear-gradient(135deg, rgba(196, 30, 53, 0.08), rgba(111, 91, 240, 0.05)) !important;
+  border-color: rgba(196, 30, 53, 0.22) !important;
+  color: #1a1b21 !important;
+}
+
+/* The supplied pastel bow ribbon wraps the New Session button: one corner at
+   the top-left, one rotated to the bottom-right. It is a transparent corner
+   motif keyed from the artwork, so nothing covers the label.
+   `~=` keeps the match on the button itself instead of its *LabelMask /
+   *Content child spans. */
+[class~="wtg9ga_newSession"]::before,
+[class~="wtg9ga_newSession"]::after {
+  content: "";
+  position: absolute;
+  width: 79px;
+  height: 38px;
+  background: url("__BOW_BUTTON__") left top / 100% auto no-repeat;
+  /* Keep the pastel art intact: only a touch of saturation, no darkening,
+     so it stays a light watercolour motif that reads against both surfaces. */
+  filter: saturate(1.28) contrast(1.05)
+    drop-shadow(0 1px 2px rgba(0, 0, 0, 0.24));
+  pointer-events: none;
+  z-index: 0;
+}
+
+[class~="wtg9ga_newSession"]::before {
+  top: -12px;
+  left: -14px;
+}
+
+[class~="wtg9ga_newSession"]::after {
+  right: -14px;
+  bottom: -12px;
+  transform: rotate(180deg);
+}
+
+/* The bow is tied onto the button border, so its loops have to sit outside
+   the rounded rectangle instead of being clipped into the button interior. */
+[class*="wtg9ga_root"]:not([class*="wtg9ga_collapsed"]) [class~="wtg9ga_newSession"] {
+  overflow: visible;
+}
+
+/* Keep the label and shortcut above the ribbon. */
+[class~="wtg9ga_newSession"] > [class*="wtg9ga_newSessionLabelMask"],
+[class~="wtg9ga_newSession"] > [class*="wtg9ga_newSessionShortcut"] {
+  position: relative;
+  z-index: 1;
+}
+
+body:not([data-ds-dark-theme]) [class~="wtg9ga_newSession"]::before,
+body:not([data-ds-dark-theme]) [class~="wtg9ga_newSession"]::after {
+  filter: saturate(1.45) contrast(1.1)
+    drop-shadow(0 1px 2px rgba(104, 58, 44, 0.2));
+}
+
+/* The collapsed sidebar turns the button into a 28px icon; no room for bows. */
+[class*="wtg9ga_root"][class*="wtg9ga_collapsed"] [class~="wtg9ga_newSession"]::before,
+[class*="wtg9ga_root"][class*="wtg9ga_collapsed"] [class~="wtg9ga_newSession"]::after {
+  display: none;
+}
+
+[class*="wtg9ga_panelRow"] {
+  color: var(--dsw-alias-label-secondary) !important;
+}
+
+[class*="wtg9ga_panelRow"]:hover {
+  background: rgba(255, 255, 255, 0.055) !important;
+  color: #edf1f8 !important;
+}
+
+[class*="wtg9ga_panelActive"] {
+  background: linear-gradient(90deg, rgba(201, 34, 56, 0.11), rgba(201, 34, 56, 0.025)) !important;
+  color: #ffffff !important;
+  box-shadow: inset 2px 0 0 #c92238;
+}
+
+body:not([data-ds-dark-theme]) [class*="wtg9ga_panelRow"]:hover {
+  background: rgba(26, 27, 33, 0.055) !important;
+  color: #1a1b21 !important;
+}
+
+body:not([data-ds-dark-theme]) [class*="wtg9ga_panelActive"] {
+  background: linear-gradient(90deg, rgba(184, 28, 49, 0.09), rgba(184, 28, 49, 0.015)) !important;
+  color: #1a1b21 !important;
+  box-shadow: inset 2px 0 0 #b81c31;
+}
+
+/* --------------------------------------------------------------------------
+   Conversation chrome
+   -------------------------------------------------------------------------- */
+
+[class*="an3WzG_root"] {
+  background: transparent !important;
+}
+
+/* Home page: the snow painting is the stage backdrop, not the composer. */
+[class*="an3WzG_root"][data-phase="hero"] {
+  position: relative;
+  background:
+    radial-gradient(circle at 82% 34%, rgba(82, 112, 255, 0.34), transparent 26%),
+    radial-gradient(circle at 69% 16%, rgba(255, 70, 111, 0.28), transparent 24%),
+    linear-gradient(
+      90deg,
+      rgba(5, 7, 15, 0.96) 0%,
+      rgba(8, 10, 18, 0.90) 30%,
+      rgba(8, 9, 17, 0.60) 54%,
+      rgba(8, 9, 17, 0.24) 72%,
+      rgba(8, 9, 17, 0.08) 100%
+    ),
+    linear-gradient(180deg, rgba(10, 13, 22, 0.44) 0%, rgba(9, 11, 18, 0.10) 42%, rgba(9, 11, 18, 0.56) 100%),
+    url("__HOME_ART__") center bottom / cover no-repeat !important;
+}
+
+body:not([data-ds-dark-theme]) [class*="an3WzG_root"][data-phase="hero"] {
+  background:
+    radial-gradient(circle at 82% 34%, rgba(112, 142, 255, 0.14), transparent 28%),
+    radial-gradient(circle at 69% 16%, rgba(196, 30, 53, 0.10), transparent 26%),
+    linear-gradient(
+      90deg,
+      rgba(245, 240, 233, 0.96) 0%,
+      rgba(244, 240, 232, 0.92) 28%,
+      rgba(244, 240, 232, 0.72) 54%,
+      rgba(244, 240, 232, 0.30) 72%,
+      rgba(244, 240, 232, 0.12) 100%
+    ),
+    linear-gradient(180deg, rgba(244, 240, 232, 0.58) 0%, rgba(244, 240, 232, 0.16) 42%, rgba(244, 240, 232, 0.52) 100%),
+    url("__HOME_ART__") center bottom / cover no-repeat !important;
+}
+
+[class*="an3WzG_header"] {
+  background: linear-gradient(180deg, rgba(7, 9, 15, 0.80) 0%, rgba(7, 9, 15, 0) 100%) !important;
+  border-bottom: 1px solid rgba(232, 236, 242, 0.065) !important;
+  backdrop-filter: blur(14px);
+}
+
+body:not([data-ds-dark-theme]) [class*="an3WzG_header"] {
+  background: linear-gradient(180deg, rgba(244, 240, 232, 0.84) 0%, rgba(244, 240, 232, 0) 100%) !important;
+  border-bottom-color: rgba(26, 27, 33, 0.06) !important;
+}
+
+[class*="an3WzG_crumbCurrent"] {
+  letter-spacing: 0.015em;
+}
+
+/* Long sessions get a darker glass floor so the stars never fight the text. */
+[class*="an3WzG_root"][data-phase="active"] [class*="an3WzG_scrollBody"] {
+  background: linear-gradient(180deg, rgba(7, 9, 15, 0.50) 0%, rgba(7, 9, 15, 0.74) 55%, rgba(7, 9, 15, 0.84) 100%);
+}
+
+body:not([data-ds-dark-theme]) [class*="an3WzG_root"][data-phase="active"] [class*="an3WzG_scrollBody"] {
+  background: linear-gradient(180deg, rgba(244, 240, 232, 0.52) 0%, rgba(244, 240, 232, 0.78) 55%, rgba(244, 240, 232, 0.88) 100%);
+}
+
+/* Empty state: a stage card rather than a blank page. */
+[class*="WOwLGG_root"] {
+  position: relative;
+}
+
+[class*="GRgSLq_root"] {
+  position: relative;
+}
+
+/* Hero stage dressing: character on the left, lights and ornaments around the box. */
+[class*="an3WzG_root"][data-phase="hero"] [class*="GRgSLq_card"] {
+  z-index: 2;
+}
+
+/* The corner ribbon's lace frill hangs inside the top strip of the card, so
+   the box gets a taller empty header and the first line starts below it. */
+[class*="an3WzG_root"][data-phase="hero"] [class*="GRgSLq_input"] {
+  min-height: 68px;
+  padding-top: 28px;
+}
+
+[class*="an3WzG_root"][data-phase="hero"] [class*="GRgSLq_placeholder"] {
+  top: 28px;
+}
+
+[class*="an3WzG_root"][data-phase="hero"] [class*="GRgSLq_root"]::before {
+  content: "";
+  position: absolute;
+  inset: -82px -88px -72px -118px;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg fill='none' stroke='%23ff5c8d' stroke-opacity='.34' stroke-width='2.4'%3E%3Cpath d='M118 88c-14-26-41-34-53-23-14 13-6 42 17 56 12 8 25 10 36 4 10 6 24 4 36-4 23-14 31-43 17-56-12-11-39-3-53 23Z'/%3E%3Cpath d='M118 92c-8-21-27-28-36-20-10 9-5 29 12 39 9 5 18 7 24 3 7 4 16 2 25-3 17-10 22-30 12-39-9-8-28-1-37 20Z'/%3E%3C/g%3E%3Ccircle cx='118' cy='96' r='7' fill='%23ffe3ec' fill-opacity='.32'/%3E%3C/svg%3E") calc(100% - 112px) calc(100% - 54px) / 126px 126px no-repeat,
+    radial-gradient(circle at 62% 14%, rgba(255, 83, 118, 0.26), transparent 16%),
+    radial-gradient(circle at 86% 34%, rgba(109, 112, 255, 0.22), transparent 18%),
+    radial-gradient(circle at 72% 70%, rgba(255, 235, 244, 0.12) 0 1.5px, transparent 2px),
+    radial-gradient(circle at 76% 72%, rgba(255, 235, 244, 0.10) 0 1px, transparent 1.5px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+[class*="an3WzG_root"][data-phase="hero"] [class*="GRgSLq_root"]::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  right: auto;
+  bottom: calc(100% + 44px);
+  width: 160px;
+  aspect-ratio: 600 / 760;
+  background:
+    radial-gradient(circle at 46% 64%, rgba(156, 255, 201, 0.14), transparent 62%),
+    radial-gradient(circle at 52% 18%, rgba(255, 83, 118, 0.10), transparent 32%),
+    url("__BUNNY__") center / contain no-repeat;
+  opacity: 0.98;
+  filter: brightness(1.08) saturate(1.04) drop-shadow(0 18px 40px rgba(0, 0, 0, 0.55));
+  pointer-events: none;
+  z-index: 1;
+}
+
+body:not([data-ds-dark-theme]) [class*="an3WzG_root"][data-phase="hero"] [class*="GRgSLq_root"]::after {
+  filter: brightness(1.04) saturate(0.96) drop-shadow(0 12px 28px rgba(80, 55, 45, 0.18));
+}
+
+[class*="WOwLGG_headline"] {
+  font-family: "Bahnschrift", "Segoe UI", "Microsoft YaHei UI", "PingFang SC", sans-serif;
+  font-size: 28px;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 32px rgba(140, 150, 255, 0.20);
+}
+
+[class*="WOwLGG_fish"] {
+  color: #a9b7ff !important;
+  filter: drop-shadow(0 0 14px rgba(130, 145, 255, 0.42));
+}
+
+body:not([data-ds-dark-theme]) [class*="WOwLGG_fish"] {
+  color: #5e63c9 !important;
+  filter: drop-shadow(0 0 10px rgba(94, 99, 201, 0.24));
+}
+
+/* --------------------------------------------------------------------------
+   Composer
+   -------------------------------------------------------------------------- */
+
+[class*="GRgSLq_card"] {
+  position: relative;
+  overflow: visible;
+  background: linear-gradient(180deg, rgba(16, 21, 32, 0.93) 0%, rgba(9, 12, 19, 0.97) 100%) !important;
+  border: 1px solid rgba(232, 236, 242, 0.10) !important;
+  border-radius: 18px !important;
+  box-shadow:
+    0 26px 80px rgba(0, 0, 0, 0.50),
+    0 0 90px rgba(255, 67, 114, 0.08),
+    0 0 70px rgba(95, 112, 255, 0.06),
+    0 0 0 1px rgba(201, 34, 56, 0.035),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+  backdrop-filter: blur(22px) saturate(1.12);
+}
+
+[class*="GRgSLq_card"]::before {
+  content: "";
+  position: absolute;
+  inset: 0 16% auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201, 34, 56, 0.58), transparent);
+  pointer-events: none;
+}
+
+[class*="GRgSLq_card"]::after {
+  content: "";
+  position: absolute;
+  inset: -28px -26px -32px;
+  border-radius: 34px;
+  background:
+    radial-gradient(circle at 10% 78%, rgba(255, 255, 255, 0.16) 0 1.2px, transparent 1.8px),
+    radial-gradient(circle at 86% 18%, rgba(255, 255, 255, 0.14) 0 1.2px, transparent 1.8px),
+    linear-gradient(118deg, transparent 0 17%, rgba(255, 83, 118, 0.22) 17.6% 18.2%, transparent 18.8% 100%),
+    linear-gradient(332deg, transparent 0 70%, rgba(93, 118, 255, 0.18) 70.6% 71.2%, transparent 71.8% 100%);
+  -webkit-mask:
+    radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px)) top left / 46% 100% no-repeat,
+    radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px)) top right / 46% 100% no-repeat;
+  mask:
+    radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px)) top left / 46% 100% no-repeat,
+    radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px)) top right / 46% 100% no-repeat;
+  opacity: 0.92;
+  pointer-events: none;
+}
+
+[class*="GRgSLq_cardWorkspaceTrigger"]::after {
+  border-color: rgba(201, 34, 56, 0.13) !important;
+  border-style: solid !important;
+}
+
+body:not([data-ds-dark-theme]) [class*="GRgSLq_cardWorkspaceTrigger"]::after {
+  border-color: rgba(184, 28, 49, 0.10) !important;
+}
+
+[class*="GRgSLq_input"] {
+  caret-color: #8fe3d2;
+}
+
+[class*="GRgSLq_placeholder"] {
+  color: rgba(237, 241, 248, 0.38) !important;
+}
+
+[class*="GRgSLq_primary"] {
+  background: linear-gradient(135deg, #c92238, #8f1426) !important;
+  box-shadow:
+    0 0 20px rgba(201, 34, 56, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
+}
+
+[class*="GRgSLq_primary"]:hover:not(:disabled) {
+  background: linear-gradient(135deg, #da3a4e, #b81c31) !important;
+  box-shadow: 0 0 30px rgba(201, 34, 56, 0.38) !important;
+}
+
+body:not([data-ds-dark-theme]) [class*="GRgSLq_card"] {
+  background: linear-gradient(180deg, rgba(255, 253, 248, 0.92) 0%, rgba(248, 244, 237, 0.96) 100%) !important;
+  border-color: rgba(26, 27, 33, 0.12) !important;
+  box-shadow:
+    0 26px 80px rgba(80, 55, 45, 0.16),
+    0 0 70px rgba(196, 30, 53, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85) !important;
+}
+
+body:not([data-ds-dark-theme]) [class*="GRgSLq_card"]::after {
+  background:
+    radial-gradient(circle at 10% 78%, rgba(26, 27, 33, 0.12) 0 1.2px, transparent 1.8px),
+    radial-gradient(circle at 86% 18%, rgba(26, 27, 33, 0.10) 0 1.2px, transparent 1.8px),
+    linear-gradient(118deg, transparent 0 17%, rgba(196, 30, 53, 0.16) 17.6% 18.2%, transparent 18.8% 100%),
+    linear-gradient(332deg, transparent 0 70%, rgba(93, 118, 255, 0.10) 70.6% 71.2%, transparent 71.8% 100%);
+  opacity: 0.82;
+}
+
+body:not([data-ds-dark-theme]) [class*="GRgSLq_placeholder"] {
+  color: rgba(26, 27, 33, 0.40) !important;
+}
+
+/* --------------------------------------------------------------------------
+   Home composer: a red sticker bow, a hearts-and-wings lace frame, a star ring
+   and one fang biting the top border.
+   The markup is injected by client.template.js; everything is pointer-transparent.
+   -------------------------------------------------------------------------- */
+
+.orbit-stage-deco {
+  display: none;
+}
+
+[class*="an3WzG_root"][data-phase="hero"] .orbit-stage-deco {
+  display: block;
+  position: absolute;
+  inset: -14px;
+  border-radius: 32px;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Lace trim: rows of tiny hearts and angel wings, drawn as inline SVG tiles. */
+.orbit-stage-deco-trim {
+  position: absolute;
+  background-repeat: repeat-x;
+  background-size: 28px 13px;
+  filter: drop-shadow(0 0 4px rgba(255, 110, 140, 0.25));
+}
+
+.orbit-stage-deco-trim-top {
+  top: 3px;
+  left: 26px;
+  right: 34px;
+  height: 13px;
+}
+
+.orbit-stage-deco-trim-bottom {
+  bottom: 3px;
+  left: 26px;
+  right: 46px;
+  height: 13px;
+}
+
+.orbit-stage-deco-trim-left,
+.orbit-stage-deco-trim-right {
+  width: 13px;
+  background-repeat: repeat-y;
+  background-size: 13px 28px;
+}
+
+.orbit-stage-deco-trim-left {
+  left: 3px;
+  top: 30px;
+  bottom: 34px;
+}
+
+.orbit-stage-deco-trim-right {
+  right: 3px;
+  top: 34px;
+  bottom: 32px;
+}
+
+/* Elliptical star ring around the whole box. */
+.orbit-stage-deco-orbit {
+  position: absolute;
+  inset: -27px -40px;
+  border: 1.2px dashed rgba(255, 196, 211, 0.62);
+  border-radius: 50%;
+  transform: rotate(-6deg);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 231, 238, 0.95) 0 1.8px, transparent 2.4px),
+    radial-gradient(circle at 100% 50%, rgba(255, 231, 238, 0.78) 0 1.4px, transparent 2px),
+    radial-gradient(circle at 50% 100%, rgba(255, 231, 238, 0.88) 0 1.6px, transparent 2.2px),
+    radial-gradient(circle at 0% 50%, rgba(255, 231, 238, 0.68) 0 1.2px, transparent 1.8px);
+  box-shadow:
+    0 0 30px rgba(255, 108, 143, 0.18),
+    inset 0 0 30px rgba(255, 108, 143, 0.10);
+  animation: orbit-stage-ring 9s ease-in-out infinite alternate;
+}
+
+.orbit-stage-deco-orbit::before {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border: 1px dashed rgba(255, 196, 211, 0.32);
+  border-radius: 50%;
+}
+
+.orbit-stage-deco-orbit::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  width: 15px;
+  height: 15px;
+  transform: translateX(-50%);
+  background: radial-gradient(circle at 50% 50%, rgba(255, 244, 247, 0.95), rgba(255, 175, 195, 0.35) 60%, transparent 70%);
+  clip-path: polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%);
+  filter: drop-shadow(0 0 8px rgba(255, 123, 152, 0.65));
+  animation: orbit-stage-twinkle 3.4s ease-in-out infinite alternate;
+}
+
+.orbit-stage-deco-bow,
+.orbit-stage-deco-notes,
+.orbit-stage-deco-fang {
+  position: absolute;
+  display: block;
+}
+
+/* Both corner stickers come straight from the supplied artwork (no redrawing).
+   client.template.js sizes them from the live free space around the card. */
+.orbit-stage-deco-bow,
+.orbit-stage-deco-notes {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+/* The supplied lace-corner artwork (recoloured crimson, no redrawing): the
+   lace band starts on the top border and the tails end on the left border, so
+   the ribbon is pinned to the corner with no gap. client.template.js sizes it
+   from the live free space around the card. */
+.orbit-stage-deco-bow-tl {
+  top: 1px;
+  left: -13px;
+  width: 140px;
+  height: 117px;
+  background-image: url("__BOW_CORNER__");
+  transform-origin: 3.7% 14.4%;
+  -webkit-mask-image: linear-gradient(90deg, #000 0 72%, transparent 97%);
+  mask-image: linear-gradient(90deg, #000 0 72%, transparent 97%);
+  filter:
+    drop-shadow(0 10px 18px rgba(0, 0, 0, 0.32))
+    drop-shadow(0 0 14px rgba(255, 62, 96, 0.22));
+}
+
+/* A little staff of notes laid along the bottom border, cut from the supplied
+   artwork (paper keyed out, ink warmed to the same crimson). */
+.orbit-stage-deco-notes {
+  right: 8px;
+  bottom: -42px;
+  width: 156px;
+  height: 60px;
+  background-image: url("__NOTES_CORNER__");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  transform-origin: 84% 78%;
+  filter:
+    drop-shadow(0 10px 20px rgba(0, 0, 0, 0.32))
+    drop-shadow(0 0 12px rgba(255, 90, 120, 0.18));
+  animation: orbit-stage-note-drift 7s ease-in-out infinite alternate;
+}
+
+/* The fang grows out of the top border; its base sits on the edge. */
+.orbit-stage-deco-fang {
+  top: 5px;
+  right: 30px;
+  width: 36px;
+  height: 46px;
+  filter: drop-shadow(0 7px 14px rgba(0, 0, 0, 0.34));
+}
+
+.orbit-stage-deco-float {
+  position: absolute;
+  font: 400 13px/1 "Segoe UI Symbol", "Segoe UI", sans-serif;
+  color: rgba(255, 143, 169, 0.55);
+  text-shadow: 0 0 10px rgba(255, 110, 145, 0.25);
+  animation: orbit-stage-float 8s ease-in-out infinite alternate;
+}
+
+.orbit-stage-deco-float-a {
+  left: -32px;
+  bottom: 58px;
+}
+
+.orbit-stage-deco-float-b {
+  right: -30px;
+  top: 44px;
+  font-size: 10px;
+  animation-delay: -3.2s;
+}
+
+body:not([data-ds-dark-theme]) .orbit-stage-deco-trim {
+  filter: drop-shadow(0 0 3px rgba(184, 28, 49, 0.14)) saturate(1.25) brightness(0.9);
+}
+
+body:not([data-ds-dark-theme]) .orbit-stage-deco-orbit {
+  border-color: rgba(184, 28, 49, 0.42);
+  box-shadow:
+    0 0 24px rgba(184, 28, 49, 0.12),
+    inset 0 0 24px rgba(184, 28, 49, 0.07);
+}
+
+body:not([data-ds-dark-theme]) .orbit-stage-deco-float {
+  color: rgba(196, 30, 53, 0.40);
+  text-shadow: 0 0 8px rgba(196, 30, 53, 0.12);
+}
+
+body:not([data-ds-dark-theme]) .orbit-stage-deco-bow-tl,
+body:not([data-ds-dark-theme]) .orbit-stage-deco-notes {
+  filter: drop-shadow(0 8px 16px rgba(80, 55, 45, 0.18));
+}
+
+body:not([data-ds-dark-theme]) .orbit-stage-deco-fang {
+  filter: drop-shadow(0 6px 12px rgba(80, 55, 45, 0.20));
+}
+
+@keyframes orbit-stage-ring {
+  from { opacity: 0.55; }
+  to { opacity: 0.95; }
+}
+
+@keyframes orbit-stage-twinkle {
+  from { opacity: 0.45; transform: translateX(-50%) scale(0.85); }
+  to { opacity: 1; transform: translateX(-50%) scale(1.1); }
+}
+
+@keyframes orbit-stage-note-drift {
+  from { transform: translateY(3px) rotate(-2.5deg); }
+  to { transform: translateY(-7px) rotate(2deg); }
+}
+
+@keyframes orbit-stage-float {
+  from { transform: translateY(4px); opacity: 0.30; }
+  to { transform: translateY(-8px); opacity: 0.65; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit-stage-deco-orbit,
+  .orbit-stage-deco-orbit::after,
+  .orbit-stage-deco-bow-tl,
+  .orbit-stage-deco-notes,
+  .orbit-stage-deco-float,
+  .orbit-stage-bubble-sparkles .os-spk-tl-star,
+  .orbit-stage-bubble-sparkles .os-spk-br-star {
+    animation: none !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Messages and markdown
+   -------------------------------------------------------------------------- */
+
+/* `data-message-bubble` is the stable hook the chat UI puts on the user
+   bubble; the old `LOmM4q_bubble` class hash is gone in the current build. */
+[data-message-bubble] {
+  position: relative;
+  overflow: visible;
+  background: linear-gradient(135deg, rgba(201, 34, 56, 0.13), rgba(111, 91, 240, 0.10)) !important;
+  border: 1px solid rgba(201, 34, 56, 0.17) !important;
+  color: #f2f5fb !important;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.14);
+}
+
+/* Tiny star / bow / heart clusters at the free top-left & bottom-right. */
+.orbit-stage-bubble-sparkles {
+  --orbit-spk-star: #ffe9b3;
+  --orbit-spk-bow: #ea5f78;
+  --orbit-spk-bow-knot: #b3213c;
+  --orbit-spk-heart: #ff9fc2;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.orbit-stage-bubble-sparkles .os-spk {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.22));
+}
+
+.orbit-stage-bubble-sparkles .os-spk-star { fill: var(--orbit-spk-star); }
+.orbit-stage-bubble-sparkles .os-spk-bow { fill: var(--orbit-spk-bow); }
+.orbit-stage-bubble-sparkles .os-spk-bow-knot { fill: var(--orbit-spk-bow-knot); }
+.orbit-stage-bubble-sparkles .os-spk-heart { fill: var(--orbit-spk-heart); }
+
+/* top-left cluster: bow on the rim, star & heart peeking at the edge */
+.orbit-stage-bubble-sparkles .os-spk-tl-bow {
+  width: 14px;
+  height: 14px;
+  left: 8px;
+  top: -18px;
+  transform: rotate(-12deg);
+}
+.orbit-stage-bubble-sparkles .os-spk-tl-star {
+  width: 11px;
+  height: 11px;
+  left: -7px;
+  top: -13px;
+  transform-origin: center;
+  animation: orbit-stage-spk-twinkle 3.4s ease-in-out infinite;
+}
+.orbit-stage-bubble-sparkles .os-spk-tl-heart {
+  width: 9px;
+  height: 9px;
+  left: -11px;
+  top: 4px;
+  transform: rotate(-10deg);
+}
+
+/* bottom-right cluster: mirrored arrangement */
+.orbit-stage-bubble-sparkles .os-spk-br-bow {
+  width: 13px;
+  height: 13px;
+  right: 9px;
+  bottom: -17px;
+  transform: rotate(10deg);
+}
+.orbit-stage-bubble-sparkles .os-spk-br-heart {
+  width: 11px;
+  height: 11px;
+  right: -8px;
+  bottom: -12px;
+  transform: rotate(8deg);
+}
+.orbit-stage-bubble-sparkles .os-spk-br-star {
+  width: 9px;
+  height: 9px;
+  right: -12px;
+  bottom: 5px;
+  transform-origin: center;
+  animation: orbit-stage-spk-twinkle 2.8s ease-in-out -1.2s infinite;
+}
+
+body:not([data-ds-dark-theme]) .orbit-stage-bubble-sparkles {
+  --orbit-spk-star: #f2bc5c;
+  --orbit-spk-bow: #d33a59;
+  --orbit-spk-bow-knot: #a51f3a;
+  --orbit-spk-heart: #ef83aa;
+}
+
+body:not([data-ds-dark-theme]) .orbit-stage-bubble-sparkles .os-spk {
+  filter: drop-shadow(0 1px 2px rgba(190, 90, 120, 0.20));
+}
+
+@keyframes orbit-stage-spk-twinkle {
+  0%, 100% { opacity: 0.55; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.12); }
+}
+
+/* Bottom-left character sticker + top-right creature sticker on every bubble. */
+[data-message-bubble]::before {
+  content: "";
+  position: absolute;
+  left: -12px;
+  bottom: -16px;
+  width: 28px;
+  height: 29px;
+  background: url("__BUBBLE_BL__") center / contain no-repeat;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.25));
+  pointer-events: none;
+  z-index: 0;
+}
+
+[data-message-bubble]::after {
+  content: "";
+  position: absolute;
+  right: -10px;
+  top: -14px;
+  width: 28px;
+  height: 26px;
+  background: url("__BUBBLE_TR__") center / contain no-repeat;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.25));
+  pointer-events: none;
+  z-index: 0;
+}
+
+body:not([data-ds-dark-theme]) [data-message-bubble] {
+  background: linear-gradient(135deg, rgba(184, 28, 49, 0.06), rgba(111, 91, 240, 0.045)) !important;
+  border-color: rgba(184, 28, 49, 0.12) !important;
+  color: #1a1b21 !important;
+}
+
+[data-code-block-banner] {
+  background: rgba(11, 15, 23, 0.94) !important;
+  border-bottom: 1px solid rgba(143, 227, 210, 0.10) !important;
+}
+
+body:not([data-ds-dark-theme]) [data-code-block-banner] {
+  background: rgba(239, 233, 222, 0.96) !important;
+  border-bottom-color: rgba(46, 139, 122, 0.12) !important;
+}
+
+::selection {
+  background: rgba(201, 34, 56, 0.24);
+  color: #ffffff;
+}
+
+body:not([data-ds-dark-theme]) ::selection {
+  background: rgba(184, 28, 49, 0.16);
+  color: #1a1b21;
+}
+
+/* --------------------------------------------------------------------------
+   Menus, dialogs, focus
+   -------------------------------------------------------------------------- */
+
+[role="menu"],
+[role="dialog"] {
+  backdrop-filter: blur(20px) saturate(1.08);
+}
+
+:focus-visible {
+  outline-color: #8fe3d2 !important;
+}
+
+body:not([data-ds-dark-theme]) :focus-visible {
+  outline-color: #2e8b7a !important;
+}
+
+a {
+  color: var(--dsw-alias-link);
+}
+
+/* --------------------------------------------------------------------------
+   Settings → General: the pink-shy postcard.
+   -------------------------------------------------------------------------- */
+
+.orbit-stage-about {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 4px 0 8px;
+  padding: 14px 16px 14px 18px;
+  overflow: hidden;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: var(--dsw-radius-lg);
+  background:
+    linear-gradient(135deg, rgba(201, 34, 56, 0.06), rgba(111, 91, 240, 0.04)),
+    var(--dsw-alias-settings-card-fill, var(--dsw-alias-bg-layer-2));
+}
+
+.orbit-stage-about::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 2px;
+  background: linear-gradient(180deg, #c92238, transparent 80%);
+}
+
+.orbit-stage-about-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.orbit-stage-about-kicker {
+  font: 500 9px/1.4 "Consolas", "Cascadia Code", monospace;
+  letter-spacing: 0.20em;
+  color: #c92238;
+}
+
+.orbit-stage-about-title {
+  margin-top: 4px;
+  font: 500 17px/1.3 "Bahnschrift", "Microsoft YaHei UI", "PingFang SC", sans-serif;
+  letter-spacing: 0.06em;
+  color: var(--dsw-alias-label-primary);
+}
+
+.orbit-stage-about-meta {
+  margin-top: 3px;
+  font: 500 9px/1.5 "Consolas", "Cascadia Code", monospace;
+  letter-spacing: 0.12em;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.orbit-stage-about-note {
+  margin: 8px 0 0;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--dsw-alias-label-secondary);
+}
+
+.orbit-stage-about-art {
+  flex: none;
+  width: 132px;
+  height: 92px;
+  border-radius: 12px;
+  border: 1px solid rgba(201, 34, 56, 0.18);
+  background: url("__HEARTS__") center / cover no-repeat;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+body:not([data-ds-dark-theme]) .orbit-stage-about {
+  background:
+    linear-gradient(135deg, rgba(184, 28, 49, 0.04), rgba(111, 91, 240, 0.03)),
+    var(--dsw-alias-settings-card-fill, var(--dsw-alias-bg-layer-1));
+}
+
+body:not([data-ds-dark-theme]) .orbit-stage-about-art {
+  border-color: rgba(184, 28, 49, 0.14);
+  box-shadow: 0 8px 24px rgba(80, 55, 45, 0.12);
+}
+
+/* --------------------------------------------------------------------------
+   Motion: only a slow, low-contrast drift on the atmosphere layer.
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  #orbit-stage-bg {
+    animation: orbit-stage-drift 38s ease-in-out infinite alternate;
+    transform-origin: 60% 40%;
+  }
+
+  @keyframes orbit-stage-drift {
+    0% {
+      transform: scale(1.015) translate3d(0, 0, 0);
+    }
+    100% {
+      transform: scale(1.045) translate3d(-0.6%, -0.5%, 0);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #orbit-stage-bg {
+    animation: none !important;
+  }
+}

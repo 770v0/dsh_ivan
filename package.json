@@ -1,0 +1,25 @@
+{
+  "name": "dsh-theme-orbit-stage",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ORBIT STAGE — a fan-made Alien Stage / Ivan theme for the DeepSeek Harness web GUI.",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "client": {
+      "platform": "web",
+      "inject": [
+        "theme"
+      ],
+      "immediately": true
+    }
+  },
+  "dependencies": {
+    "jimp": "^0.22.12"
+  }
+}
